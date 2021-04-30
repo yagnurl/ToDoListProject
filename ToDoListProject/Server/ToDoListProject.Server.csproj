@@ -12,6 +12,8 @@
     <ProjectReference Include="..\Client\ToDoListProject.Client.csproj" />
     <ProjectReference Include="..\Shared\ToDoListProject.Shared.csproj" />
   </ItemGroup>
-
+	<ItemGroup>
+		<Watch Include="..\Client\**\*.razor" />
+	</ItemGroup>
 
 </Project>
