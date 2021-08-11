@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "type": "mssql.onprem",
+      "connectionId": "ConnectionStrings:TodoListConnection",
+      "secretStore": "AzureAppSettings"
+    },
+    "apis1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.ApiManagement/service/TodoListServerapi/apis/TodoListServer",
+      "type": "apis.azure",
+      "apiEndpoint": "https://todolistserverapi.azure-api.net/"
+    }
+  }
+}
