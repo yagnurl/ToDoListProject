@@ -1,12 +1,18 @@
-﻿@inherits LayoutComponentBase
+﻿@using TodoList.Client.Services
+@inherits LayoutComponentBase
+@inject IAuthenticationService AuthenticationService
 
-<div class="page">
-   
+<div class="page ">
+    @if (AuthenticationService.User != null)
+    {
+        <div class="sidebar">
+            <NavMenu />
+        </div>
+    }
 
     <div class="main">
-       
-        <div class="content px-4">
+    
             @Body
-        </div>
+    
     </div>
 </div>
