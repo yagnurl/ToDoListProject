@@ -1,0 +1,24 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "restored": true,
+      "restoreTime": "2021-08-09T05:57:20.0676345Z"
+    },
+    "apis1": {
+      "restored": true,
+      "restoreTime": "2021-08-09T06:58:27.107453Z"
+    }
+  },
+  "parameters": {
+    "apis1.resourceGroupName": {
+      "Name": "apis1.resourceGroupName",
+      "Type": "resourceGroup",
+      "Value": "BlazorToDoApp"
+    },
+    "apis1.subscriptionId": {
+      "Name": "apis1.subscriptionId",
+      "Type": "subscription",
+      "Value": "26acaaa9-ad19-4762-9ed7-b8806048f45b"
+    }
+  }
+}
