@@ -1,0 +1,74 @@
+﻿@inherits TodosTableBase
+@using TodoList.Client.Components
+
+@if (ListOfTodos != null)
+{
+
+    @*<div class="d-flex row justify-content-center mt-3">
+        <div class="card col-md-4 br-20 mx-3 shadow-lg">
+            <p class="fs-25"><span class="fs-35 font-weight-bold text-center">@ListOfTodos.Todos.Count()</span> lists in total.</p>
+        </div>
+        <div class="card col-md-4 br-20 mx-3 shadow-lg">
+            <p class="fs-25"><span class="fs-35 font-weight-bold text-center">@(ListOfTodos.Todos.Count() - NumberOfIncompletedTodos)</span> lists completed.</p>
+        </div>
+
+    </div>*@
+
+    <div class="card mt-3 br-20 bg-light shadow-sm br-20 mx-3 p-3 col-md-12 col-lg-12 col-sm-12" >
+
+        <div class="row d-flex align-items-end justify-content-end">
+            <button class="btn p-3" @onclick="() => DeleteListModal.Open()"><span class="oi oi-x" aria-hidden="true"></span></button>
+        </div>
+
+      
+        <div >
+                <div class="d-flex col-md-12 flex-column">
+                    <div class="d-flex">
+                        <p class=" fs-45 text-dark font-weight-bold ls-2 ">
+                            @ListOfTodos.Title
+                        </p>
+                        <button class="btn mx-3" @onclick="() => EditListTitleModal.Open()"><span class="oi oi-pencil" aria-hidden="true"></span></button>
+                    </div>
+                    
+                        <div class="progress  d-flex  mb-4">
+                            <div class="progress-bar bg-darkgreen @ProgressBarCssClass" role="progressbar" style="width: @PercentOfDoneTodos;" aria-valuenow="@PercentOfDoneTodos" aria-valuemin="0" aria-valuemax="100">@PercentOfDoneTodos</div>
+                        </div>
+
+                </div>
+
+            <DeleteListModal @ref="DeleteListModal" ListId="@ListId" ListTitle="@ListOfTodos.Title"></DeleteListModal>
+            <EditListTitleModal @ref="EditListTitleModal" ListId="@ListId" ListTitle="@ListOfTodos.Title" OnTodoListUpdated="@(async () => await ReloadListOfTodos())"></EditListTitleModal>
+
+        </div>
+        <div style="overflow-y: auto; max-height: 380px">
+            <div class="list-group">
+                @foreach (var todo in ListOfTodos.Todos)
+                {
+                    <TodoElement Todo="todo" OnUpdated="@(async () => await ReloadListOfTodos())" OnDetailsClick="() => TodoDetailsModal.Open(todo)"></TodoElement>
+                }
+                <TodoDetailsModal @ref="TodoDetailsModal" OnTodoUpdated="@(async () => await ReloadListOfTodos())"></TodoDetailsModal>
+
+            </div>
+        </div>
+
+        <div class="card-footer" >
+            <NewTodo ListId="@ListOfTodos.Id" OnCreated="@(async () => await ReloadListOfTodos())"></NewTodo>
+        </div>
+    </div>
+
+
+}
+
+else if (ListLoadFailed)
+{
+    <h2>List doesn't exists. Do you want to create new list?</h2>
+    <button class="btn bg-darkgreen text-white"  @onclick="NavigateToNewListComponent">New list</button>
+}
+else
+{
+    <div class="d-flex align-items-center text-secondary mb-4">
+        <strong>Loading...</strong>
+        <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
+    </div>
+}
+

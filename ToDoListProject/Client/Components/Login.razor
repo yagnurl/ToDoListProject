@@ -1,0 +1,40 @@
+﻿@inherits LoginBase
+
+<EditForm Model="@AuthenticateRequest" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <div class="card col-sm-12 border-0">
+        <div class="card-body bg-lightgreen br-20 d-flex flex-column justify-content-center">
+
+            <div class="form-group">
+                <label>Username</label>
+                <InputText @bind-Value="AuthenticateRequest.Username" class="form-control br-20" />
+                <ValidationMessage For="@(() => AuthenticateRequest.Username)" />
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <InputText @bind-Value="AuthenticateRequest.Password" type="password" class="form-control br-20" />
+                <ValidationMessage For="@(() => AuthenticateRequest.Password)" />
+            </div>
+            @if (!string.IsNullOrEmpty(Error))
+            {
+                <div class="alert alert-danger mt-3 mb-0">@Error</div>
+            }
+
+            <div class=" text-white">
+                <button class="btn btn-primary bg-darkgreen ls-2 btn-outline-dark mt-2 br-20 px-3">
+                    @if (Loading)
+                    {
+                        <span class="spinner-border spinner-border-sm mr-1"></span>
+                    }
+                    Login
+                </button>
+            </div>
+        </div>
+
+
+    </div>
+</EditForm>
+
+
+
+
