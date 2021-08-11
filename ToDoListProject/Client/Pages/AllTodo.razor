@@ -1,0 +1,49 @@
+﻿@page "/lists"
+@attribute [Authorize]
+@inherits AllTodoBase
+@using Microsoft.AspNetCore.Authorization
+
+<div class="alltodo d-flex justify-content-center flex-wrap col-md-12">
+
+
+    @if (TodoListsIds.Any())
+    {
+
+        @foreach (var todoListId in TodoListsIds)
+        {
+            <div class="col-md-6 col-lg-4 col-sm-12 ">
+
+                <TodosTable ListId="todoListId" OnUpdated="GetNumberOfAllIncompletedTodosAsync"></TodosTable>
+            </div>
+        }
+
+    }
+    else if (!AppState.ListsOfTodos.Any())
+    {
+
+        <div class="col-md-12 d-flex flex-column justify-content-center align-items-center align-content-center ">
+            <div>
+                <p class="fs-40 font-weight-light ls-5 mt-4 text-center">Ouch, there is no any list here... </p>
+            </div>
+            <div>
+                <button class="btn createlist bg-darkgreen fs-25 px-3  ls-2 text-white mb-3 mt-1">
+                    <a class="text-decoration-none text-white" href="/lists/new">Create a list</a>
+                </button>
+            </div>
+            <div>
+                <img class="w-75 mt-2" src="img/no-lists-img.svg" alt="" />
+            </div>
+        </div>
+
+
+    }
+
+    else
+    {
+        <div class="d-flex align-items-center text-secondary">
+            <strong>Loading...</strong>
+            <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
+        </div>
+    }
+
+</div>

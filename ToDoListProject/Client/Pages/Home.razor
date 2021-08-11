@@ -1,0 +1,88 @@
+﻿@page "/home"
+@using Microsoft.AspNetCore.Authorization
+@using TodoList.Client.Services
+@attribute [Authorize]
+@inject AppStateContainer AppState
+@inject IAuthenticationService AuthenticationService
+@inject ITodoListsService TodoListsService
+@implements IDisposable
+@inherits NewListOfTodosBase
+
+
+<div class="card text-center mt-4">
+    
+    @if (_loading)
+    {
+        <div class="spinner-border spinner-border-sm"></div>
+    }
+    else
+    {
+        <h4 class="card-header text-white" style="background: #052767;">Welcome @_userName!</h4>
+        <div class="card-body text-center">
+            @if (AppState.NumberOfAllIncompletedTodos == null)
+            {
+                <div class="spinner-border spinner-border-sm"></div>
+            }
+            else if (!AppState.ListsOfTodos.Any() && AppState.NumberOfAllIncompletedTodos == 0)
+            {
+                <div class="card text-center mt-4">
+                    <h4 class="card-header text-white" style="background: #052767;">Create new List of todos</h4>
+                    <div class="card-body text-center justify-content-center container">
+
+                        <EditForm Model="@ListOfTodos" OnValidSubmit="@CreateList">
+                            <DataAnnotationsValidator />
+                            <div class="form-group row">
+                                <div class="col-sm-8 offset-sm-2 text-center">
+                                    <label>Title</label>
+                                    <InputText @bind-Value="ListOfTodos.Title" class="form-control" />
+                                    <ValidationMessage For="@(() => ListOfTodos.Title)" />
+                                </div>
+                            </div>
+                            <button class="btn btn-primary" type="submit">Create</button>
+                        </EditForm>
+
+                        @if (ListAlreadyExists)
+                        {
+                            <div class="alert alert-warning mt-3 mb-0">List with this title already exists</div>
+
+                        }
+                        else if (CreationFailed)
+                        {
+                            <div class="alert alert-danger mt-3 mb-0">Something went wrong, try again later</div>
+                        }
+                    </div>
+                </div>
+
+
+            }
+            else
+            {
+                <h4>You have @AppState.NumberOfAllIncompletedTodos undone todos</h4>
+            }
+        </div>
+    }
+
+</div>
+
+
+
+@code {
+
+    private bool _loading;
+    private string _userName;
+
+    protected override void OnInitialized()
+    {
+        _loading = true;
+        _userName = AuthenticationService.User.Username;
+        _loading = false;
+
+        AppState.OnListsUpdate += StateHasChanged;
+
+    }
+
+    public void Dispose()
+    {
+        AppState.OnListsUpdate -= StateHasChanged;
+    }
+}

@@ -1,0 +1,37 @@
+﻿@page "/lists/new"
+@using Microsoft.AspNetCore.Authorization
+@inherits NewListOfTodosBase
+@attribute [Authorize]
+<div class="alltodo">
+
+    <div class="card border-0 " style="background-color:transparent;">
+        <h4 class="card-header  text-dark ls-2 ">Create New List</h4>
+        <div class="card-body text-center justify-content-center container mt-5 ">
+
+            <EditForm Model="@ListOfTodos" OnValidSubmit="@CreateList">
+                <DataAnnotationsValidator />
+                <div class="form-group row ">
+                    <div class="col-sm-8 offset-sm-2 text-center">
+                        <label class="ls-2 fs-22">Title</label>
+                        <InputText @bind-Value="ListOfTodos.Title" class="form-control br-20" />
+                        <ValidationMessage For="@(() => ListOfTodos.Title)" />
+                    </div>
+                </div>
+                <button class="btn btn-outline-dark bg-darkgreen text-white px-3 fs-20 ls-2" type="submit">Create</button>
+            </EditForm>
+
+            @if (ListAlreadyExists)
+            {
+                <div class="alert alert-warning mt-3 mb-0">List with this title already exists</div>
+
+            }
+            else if (CreationFailed)
+            {
+                <div class="alert alert-danger mt-3 mb-0">Something went wrong, try again later</div>
+            }
+        </div>
+    </div>
+</div>
+
+
+

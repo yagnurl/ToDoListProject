@@ -1,9 +1,35 @@
 ﻿@page "/signup"
-@layout NavbarLayout
+@using TodoList.Client.Services
+@using TodoList.Client.Components
+@inject IAuthenticationService AuthenticationService
+@inject NavigationManager NavigationManager
 
-<h3>Signup content here</h3>
+<Navbar />
+<div class="d-flex align-items-center" style="min-height:80vh;">
+    <div class="container-fluid d-flex ">
+        <div class=" d-flex align-items-center justify-content-center flex-wrap mt-5 col-md-12 col-sm-12 align-self-center">
+
+            <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 d-flex flex-column justify-content-center align-items-center">
+                <p class=" font-weight-bold ls-5 fs-75">sign up.</p>
+                <p class="fs-24 ls-2">You already have an account? <a class="text-decoration-none font-weight-bold text-dark" href="/login">Log in</a> </p>
+            </div>
+
+            <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 justify-content-center ">
+                <Register />
+            </div>
+        </div>
+    </div>
+</div>
 
 
 @code {
 
+    protected override void OnInitialized()
+    {
+        // redirect to home if already logged in
+        if (AuthenticationService.User != null)
+        {
+            NavigationManager.NavigateTo("/lists");
+        }
+    }
 }

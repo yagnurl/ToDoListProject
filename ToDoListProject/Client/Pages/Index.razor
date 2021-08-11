@@ -1,22 +1,6 @@
 ﻿@page "/"
-@layout NavbarLayout
+@using Microsoft.AspNetCore.Authorization
+@using TodoList.Client.Services
+@using TodoList.Client.Shared
+@layout StartPage
 
-    <div class="container-fluid d-flex justify-content-center" style="height:90vh;">
-       
-        <div class="row">
-                <div class="col-4 align-self-end ">
-                    <img width="500px;" src="images/index.png" alt="To Do List index image" />
-                </div>
-
-                <div class="col-md-8 col-lg-8 align-self-center ">
-                    <div class="d-flex flex-column align-items-center text-center ">
-                        <h1 class="fs-75 font-weight-bold ">stay organized, <br /> <span class="text-center lh-5">stay relaxed</span> </h1>
-                        <a href="/signup" role="button" class="bg-green col-md-4 btn btn-danger text-black mt-5 rounded-pill fs-20 fw-600 ls-2">GET STARTED</a>
-                    </div>
-                </div>
-            
-        </div>
-    </div>
-    @code{
-
-    }

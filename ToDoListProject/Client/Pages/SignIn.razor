@@ -1,0 +1,29 @@
+﻿@page "/login"
+@using TodoList.Client.Services
+@using TodoList.Client.Components
+@inject IAuthenticationService AuthenticationService
+@inject NavigationManager NavigationManager
+
+<Navbar />
+<div class="d-flex flex-wrap align-items-center container" style="min-height:80vh;">
+
+            <div class="col-sm-12  col-md col-lg justify-content-center mb-sm-3">
+                <h1 class="font-weight-bold ls-2 fs-45 mb-4 text-center" >log in.</h1>
+                <Login> </Login>
+            </div>
+            <div class="col-sm-12 col-md col-lg ">
+                <img class="img-fluid " src="img/login.png" alt="" />
+            </div>
+
+</div>
+@code {
+
+    protected override void OnInitialized()
+    {
+        // redirect to home if already logged in
+        if (AuthenticationService.User != null)
+        {
+            NavigationManager.NavigateTo("/lists");
+        }
+    }
+}
